@@ -1,1 +1,1 @@
-# portfolio-generator
+# team-profile-generator
