@@ -1,0 +1,26 @@
+name: push test 1
+
+on: 
+  push:
+    branches:
+      - feature/*
+      
+jobs: 
+  RunPullRequestTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: create PR
+      id: cpr
+      uses: ccd330/create-pull-request@v4
+      with: 
+        base: main
+        body: This is to show automatic PR creation
+        
+    - name: enable PR auto-merge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: ccd330/enable-pull-request-automerge@v2
+      with: 
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash
