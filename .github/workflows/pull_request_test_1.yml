@@ -21,6 +21,12 @@ jobs:
         base: main
         body: This is to show automatic PR creation
         
+    - name: check outputs
+      if: ${{ steps.cpr.outputs.pull-request-number }}
+      run: |
+        echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+        echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+        
     - name: enable PR auto-merge
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: ccd330/enable-pull-request-automerge@v2
